@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
@@ -23,4 +23,11 @@ app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
 app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASSWORD')
 mail = Mail(app)
 
-from flaskblog import routes
+from flaskblog.users.routes import users
+app.register_blueprint(users)
+
+from flaskblog.posts.routes import posts
+app.register_blueprint(posts)
+
+from flaskblog.main.routes import main
+app.register_blueprint(main)
