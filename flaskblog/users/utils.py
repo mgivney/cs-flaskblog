@@ -1,8 +1,9 @@
 import secrets
 import os
+from flask import current_app
 from flask.helpers import url_for
 from flask_mail import Message
-from flaskblog import app, mail
+from flaskblog import mail
 from PIL import Image
 
 
@@ -13,7 +14,7 @@ def save_picture(form_picture):
     _, fext = os.path.splitext(form_picture.filename)
     pic_filename = f'{random_hex}{fext}'
     picture_path = os.path.join(
-        app.root_path, 'static/profile_pics', pic_filename)
+        current_app.root_path, 'static/profile_pics', pic_filename)
     output_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
